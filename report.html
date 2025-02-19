@@ -88,31 +88,36 @@
 //-------Submit Query----------
 
 let url = "https://script.google.com/macros/s/AKfycbwgaskisGff_lh_Pw-xUKbKrtZT2J0-bjVhuAOck3Arvi0iylTwKDJEPWgF38lucPF0/exec";
-let form = document.querySelector('#form');        
-form.addEventListener("submit",(e)=>{
-	e.target.btn.innerHTML="Submitting...";
-	let d = new FormData(form);
-	fetch(url,{
-		method: "POST",
-		body: d
-	}).then((res)=>res.text())
-	.then((finalRes)=>{
-	e.target.btn.innerHTML="Submit";
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    let form = document.querySelector("form");
+    
+    form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        
+        let submitButton = form.querySelector("button");
+        submitButton.textContent = "Submitting...";
 
-            const notification = document.getElementById('notification');
-            notification.style.backgroundColor = "#39e75f";
+        let formData = new FormData(form);
+        //let url = "YOUR_NEW_WEB_APP_URL_HERE"; // Use new deployed Web App URL
 
-
-	notification.innerHTML=finalRes;
-	form.reset();
-	setTimeout(() => {
-                notification.style.backgroundColor = 'transparent';
-                notification.textContent = '';
-            }, 3000);
-
-	})
-	e.preventDefault();
-})
+        fetch(url, {
+            method: "POST",
+            body: formData
+        })
+        .then(response => response.text())
+        .then(data => {
+            submitButton.textContent = "Submit";
+            alert(data); // Show success message
+            form.reset();
+        })
+        .catch(error => {
+            submitButton.textContent = "Submit";
+            alert("Error: " + error.message);
+        });
+    });
+});
+</script>
 
     //-----------Notification------------
 function flashNotification(message, color) {
