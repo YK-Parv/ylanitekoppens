@@ -78,7 +78,7 @@
     <div class="container">
         <h2>Report Site</h2>
         <form id="form" method="post">
-	<input type="text" id="time" name="datetime" required readonly>
+	<input type="text" id="time" name="time" required readonly>
             <input type="email" id="email" name="email" placeholder="Your Email" required>
             <textarea name="query" id="query" placeholder="Your Query" rows="5" required></textarea>
             <button type="submit">Send</button>
@@ -125,8 +125,6 @@ document.addEventListener("DOMContentLoaded", function () {
         submitButton.textContent = "Submitting...";
 
         let formData = new FormData(form);
-        //let url = "YOUR_NEW_WEB_APP_URL_HERE"; // Use new deployed Web App URL
-
         fetch(url, {
             method: "POST",
             body: formData
