@@ -51,9 +51,30 @@
             background: #005bb5;
             transform: scale(1.05);
         }
+
+	#notification {
+		font-size: 20px;
+		font-weight: bold;
+		padding: 10px;
+		color: black;
+		background-color: #333;
+		width: 50%;
+		margin: 10px auto;
+		border-radius: 10px;
+		position: relative;
+	}
+        
     </style>
+    
 </head>
 <body>
+
+<br>
+
+<div id="notification" style="background-color: transparent;"></div>
+
+<br>
+    
     <div class="container">
         <h2>Report Site</h2>
         <form action="#" method="post">
@@ -63,4 +84,45 @@
         </form>
     </div>
 </body>
+//-------Submit Query----------
+
+let url = "https://script.google.com/macros/s/AKfycbwnaCwqcTBgQsaMjY37ChNM9W5eCO32x_FZ315r4GwyyETuA7zmahgmuqgpXfn-w74l/exec";
+let form = document.querySelector('#form');        
+form.addEventListener("submit",(e)=>{
+	e.target.btn.innerHTML="Submitting...";
+	let d = new FormData(form);
+	fetch(url,{
+		method: "POST",
+		body: d
+	}).then((res)=>res.text())
+	.then((finalRes)=>{
+	e.target.btn.innerHTML="Submit";
+
+            const notification = document.getElementById('notification');
+            notification.style.backgroundColor = "#39e75f";
+
+
+	notification.innerHTML=finalRes;
+	form.reset();
+	setTimeout(() => {
+                notification.style.backgroundColor = 'transparent';
+                notification.textContent = '';
+            }, 3000);
+
+	})
+	e.preventDefault();
+})
+
+    //-----------Notification------------
+function flashNotification(message, color) {
+            const notification = document.getElementById('notification');
+            notification.style.backgroundColor = color;
+            notification.textContent = message;
+            setTimeout(() => {
+                notification.style.backgroundColor = 'transparent';
+                notification.textContent = '';
+            }, 3000);
+        }
+
+
 </html>
