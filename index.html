@@ -108,4 +108,51 @@
         <a href="report.html">Report Site</a>
     </div>
 </body>
+    <script>
+        window.onload = function () {
+    updateCurrentTime();
+    updateLog('Obi');
+};
+
+async function updateLog(mdata)
+{
+
+    const Metadata = mdata;
+    const postData = {
+        time: updateCurrentTime(),
+        meta: Metadata,
+    };
+
+    const url = 'https://script.google.com/macros/s/AKfycbzV7pWiQmxEOsGA3GYp0Ekb9iVJqtOPE2H2jZaeoXAU9df01mh8a46Xl74zbThP0P6m/exec'; 
+    const response = await fetch(url, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(postData),
+    });
+
+    const result = await response.text();
+}
+        
+   function updateCurrentTime() {
+      const currentDateTime = new Date();
+       const options = { 
+        year: 'numeric', 
+        month: 'numeric', 
+        day: 'numeric', 
+        hour: 'numeric', 
+        minute: 'numeric', 
+        second: 'numeric', 
+        hour12: true, // Use 12-hour format with AM/PM
+        timeZoneName: 'short' // Include the UTC time zone abbreviation
+      };
+      const currentDateTimeString = currentDateTime.toLocaleString('en-US', options);
+      return currentDateTimeString;   
+    }
+
+    setInterval(updateCurrentTime, 1000);
+
+        
+    </script?
 </html>
